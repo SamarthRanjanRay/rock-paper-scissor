@@ -1,183 +1,228 @@
 <html>
 <head>
-<title>Rock Paper Scissor</title>
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
- <script>
-  function setCookie(cname,cvalue,exdays) {
-  var d = new Date();
-  d.setTime(d.getTime() + (exdays*24*60*60*1000));
-  var expires = "expires=" + d.toGMTString();
-  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-  }
-  function getCookie(cname) {
-  var name = cname + "=";
-  var decodedCookie = decodeURIComponent(document.cookie);
-  var ca = decodedCookie.split(';');
-  for(var i = 0; i < ca.length; i++) {
-    var c = ca[i];
-    while (c.charAt(0) == ' ') {
-      c = c.substring(1);
+  <title>Rock Paper Scissor</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script>
+    function setCookie(cname,cvalue,exdays) {
+      var d = new Date();
+      d.setTime(d.getTime() + (exdays*24*60*60*1000));
+      var expires = "expires=" + d.toGMTString();
+      document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
     }
-    if (c.indexOf(name) == 0) {
-      return c.substring(name.length, c.length);
+    function getCookie(cname) {
+      var name = cname + "=";
+      var decodedCookie = decodeURIComponent(document.cookie);
+      var ca = decodedCookie.split(';');
+      for(var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return "";
     }
-  }
-  return "";
-}
- $(function(){
- var comp_put, user_put, w, d, l, wp, dp,naam;
+    $(function(){
+      var comp_put, user_put, w, d, l, wp, dp,naam;
 
- $(".game").hide();
- $(".highscore").hide();
- $(".score").hide();
+      $(".game").hide();
+      $(".highscore").hide();
+      $(".score").hide();
 
- 
- $(".r").click(function() {
- alert("Rock Beats Scissor\nScissor Beats Paper \nPaper Beats Rock \nAnd this cycle has been going on in the nature since the ancient times\n\nClick on the respective hand action to challenge the AI to a R.P.S. Game\n\nThe game uses local storage to store the information of the high scorer.\nSo it's a fun game to play with friends on the same device.");
- });
- 
- $(".l").click(function() {
-   $(".logo").slideToggle("slow");
-   $(".game").slideToggle("slow");
-   d=w=l=0;
-   $("#draw").html('').append(0);
-   $("#win").html('').append(0);
-   $("#lose").html('').append(0);
- });
+      $(".r").click(function() {
+        alert("Rock Beats Scissor\nScissor Beats Paper \nPaper Beats Rock \nAnd this cycle has been going on in the nature since the ancient times\n\nClick on the respective hand action to challenge the AI to a R.P.S. Game\n\nThe game uses local storage to store the information of the high scorer.\nSo it's a fun game to play with friends on the same device.");
+      });
 
- $(".h").click(function() {
-   $(".highscore").slideToggle("slow");
-    if (getCookie("wp")<wp || getCookie("name")=="") {
-  setCookie("name", document.getElementById("naam").value, 30);
-  setCookie("wp", wp, 30);
-  alert("Congratulations, " + document.getElementById("naam").value + " you have set a new record of " + wp + "% wins.");
-}
-else {
-	  alert("Better luck next time, " + document.getElementById("naam").value + " the best score is " + getCookie("wp") + "% of wins by " + getCookie("name") + ".");
-}
-   $(".score").slideToggle("slow");
-   $("#naamkaran").html('').append(document.getElementById("naam").value);
-  
- 
+      $(".l").click(function() {
+        $(".logo").slideToggle("slow");
+        $(".game").slideToggle("slow");
+        d=w=l=0;
+        $("#draw").html('').append(0);
+        $("#win").html('').append(0);
+        $("#lose").html('').append(0);
+      });
 
+      $(".h").click(function() {
+        $(".highscore").slideToggle("slow");
+        if (getCookie("wp")<wp || getCookie("name")=="") {
+          setCookie("name", document.getElementById("naam").value, 30);
+          setCookie("wp", wp, 30);
+          alert("Congratulations, " + document.getElementById("naam").value + " you have set a new record of " + wp + "% wins.");
+        }
+        else {
+	         alert("Better luck next time, " + document.getElementById("naam").value + " the best score is " + getCookie("wp") + "% of wins by " + getCookie("name") + ".");
+        }
+        $(".score").slideToggle("slow");
+        $("#naamkaran").html('').append(document.getElementById("naam").value);
+      });
+      $(".s").click(function() {
+        $(".score").slideToggle("slow");
+        $(".logo").slideToggle("slow");
+      });
+		  $(".rock").click(function() {
+			  user_put=0;
+			  comp_put = Math.floor(Math.random() * 3);
+			  if (comp_put==user_put) {
+				  d++;
+				  $("#draw").html('').append(d);
+				  $("#compa").hide().html('').append("Computer put up a ... <br>ROCK! <br> The Rocks clattered and it's a draw.").slideToggle();
+		  	}
+			  else if (comp_put==2) {
+				  w++;
+			  	$("#win").html('').append(w);
+			  	$("#compa").hide().html('').append("Computer put up a ... <br>SCISSOR! <br> Great choice to put a Rock.").slideToggle();
+			  }
+			  else {
+			  	l++;
+			  	$("#lose").html('').append(l);
+			  	$("#compa").hide().html('').append("Computer put up a ... <br>PAPER! <br> Sneaky Move by the AI.").slideToggle();
+			  }
+		  });
+		  $(".paper").click(function() {
+			  user_put=1;
+  			comp_put = Math.floor(Math.random() * 3);
+   			if (comp_put==user_put) {
+	  			d++;
+	  			$("#draw").html('').append(d);
+	  			$("#compa").hide().html('').append("Computer put up a ... <br>PAPER! <br> The Papers rustled and it's a draw").slideToggle();
+	  		}
+	  		else if (comp_put==0) {
+	  			w++;
+	  			$("#win").html('').append(w);
+	  			$("#compa").hide().html('').append("Computer put up a ... <br>ROCK! <br> Great choice to put a Paper. ").slideToggle();
+	  		}
+		  	else {
+	  			l++;
+	  			$("#lose").html('').append(l);
+	  			$("#compa").hide().html('').append("Computer put up a ... <br>SCISSOR! <br> Sneaky Move by the AI.").slideToggle();
+		    }
+		  });
 
-  
-   
- });
- $(".s").click(function() {
-   $(".score").slideToggle("slow");
-   $(".logo").slideToggle("slow");
- });
-		$(".rock").click(function() {
-			user_put=0;
-			comp_put = Math.floor(Math.random() * 3);
-			if (comp_put==user_put) {
-				d++;
-				$("#draw").html('').append(d);
-				$("#compa").hide().html('').append("Computer put up a ... <br>ROCK! <br> The Rocks clattered and it's a draw.").slideToggle();
-			}
-			else if (comp_put==2) {
-				w++;
-				$("#win").html('').append(w);
-				$("#compa").hide().html('').append("Computer put up a ... <br>SCISSOR! <br> Great choice to put a Rock.").slideToggle();
-			}
-			else {
-				l++;
-				$("#lose").html('').append(l);
-				$("#compa").hide().html('').append("Computer put up a ... <br>PAPER! <br> Sneaky Move by the AI.").slideToggle();
-			}
-		});
-		$(".paper").click(function() {
-			user_put=1;
-			comp_put = Math.floor(Math.random() * 3);
-			if (comp_put==user_put) {
-				d++;
-				$("#draw").html('').append(d);
-				$("#compa").hide().html('').append("Computer put up a ... <br>PAPER! <br> The Papers rustled and it's a draw").slideToggle();
-			}
-			else if (comp_put==0) {
-				w++;
-				$("#win").html('').append(w);
-				$("#compa").hide().html('').append("Computer put up a ... <br>ROCK! <br> Great choice to put a Paper. ").slideToggle();
-			}
-			else {
-				l++;
-				$("#lose").html('').append(l);
-				$("#compa").hide().html('').append("Computer put up a ... <br>SCISSOR! <br> Sneaky Move by the AI.").slideToggle();
-		}
-		});
-			
-		$(".scissor").click(function() {
-			user_put=2;
-			comp_put = Math.floor(Math.random() * 3);
-			if (comp_put==user_put) {
-				d++;
-				$("#draw").html('').append(d);
-				$("#compa").hide().html('').append("Computer put up a ... <br>SCISSOR! <br> The Scissors sliced each other and it's a draw").slideToggle();
-			}
-			else if (comp_put==1) {
-				w++;
-				$("#win").html('').append(w);
-				$("#compa").hide().html('').append("Computer put up a ... <br>PAPER! <br> Great choice to put a Scissor.").slideToggle();
-			}
-			else {
-				l++;
-				$("#lose").html('').append(l);
-				$("#compa").hide().html('').append("Computer put up a ... <br>ROCK! <br> Sneaky Move by the AI.").slideToggle();
-			}
-		});
-		
-	 $(".g").click(function() {
-   $(".game").slideToggle("slow");
-   $(".highscore").slideToggle("slow");
-   $("#drawa").val(d);
-   $("#wina").val(w);
-   $("#losea").val(l);
+		  $(".scissor").click(function() {
+			  user_put=2;
+  			comp_put = Math.floor(Math.random() * 3);
+  			if (comp_put==user_put) {
+  				d++;
+  				$("#draw").html('').append(d);
+	  			$("#compa").hide().html('').append("Computer put up a ... <br>SCISSOR! <br> The Scissors sliced each other and it's a draw").slideToggle();
+	  		}
+	  		else if (comp_put==1) {
+	  			w++;
+	  			$("#win").html('').append(w);
+	  			$("#compa").hide().html('').append("Computer put up a ... <br>PAPER! <br> Great choice to put a Scissor.").slideToggle();
+	  		}
+	  		else {
+	  			l++;
+	  			$("#lose").html('').append(l);
+	  			$("#compa").hide().html('').append("Computer put up a ... <br>ROCK! <br> Sneaky Move by the AI.").slideToggle();
+		  	}
+		  });
 
-   wp=(w*100)/(w+l+d);
-   $("#wp").val(wp);
-   $("#compa").hide().html('');
+	    $(".g").click(function() {
+        $(".game").slideToggle("slow");
+        $(".highscore").slideToggle("slow");
+        $("#drawa").val(d);
+        $("#wina").val(w);
+        $("#losea").val(l);
+
+        wp=(w*100)/(w+l+d);
+        $("#wp").val(wp);
+        $("#compa").hide().html('');
 
 
- });
- 
- 
-});
- </script>
- <style>
- .bg {
-	opacity : 0.8;
-	height : 90%;
-	width : 70%
-}
+      });
 
-.button {
-	float: bottom;
-	padding:5px;
-	height : 30px;
-	width : auto;
-	background: black;
-	color: white;
-}
-.r {
 
-}
-.score {
-	color: white;
-}
- </style>
+    });
+  </script>
+  <style>
+    .bg {
+      opacity : 0.8;
+	    height : 90%;
+	    width : 70%
+    }
+
+    .button {
+	    float: bottom;
+	    padding:5px;
+	    height : 30px;
+	    width : auto;
+	    background: black;
+	    color: white;
+    }
+
+    .score {
+	    color: white;
+    }
+
+    footer {
+      margin-top: 22%;
+      margin-bottom: 0px;
+      border: 1em solid white;
+      padding: 10px;
+    }
+  </style>
 </head>
 <body background="bg.png">
-<center>
-<div class="logo bg" style="background-color:red;"> <img src="logo.png" style="margin-top:150px;margin-bottom:130px;"></img><div class="button r">Instructions</div><br><div class="button l">Click to Play</div></div>
-<div class="game bg" style="background-color:yellow;"><br><h2>Click on the respective hand action to put it forward</h2><br><br><img src="scissor.png" class="scissor"></img><img src="rock.png" class="rock"></img><br><img src="paper.png" class="paper"></img><br>
-<br><h3><div id="compa"></div></h3><br>|WIN|DRAW|LOSE|<br>________<br>
-| <span id="win">0</span> | <span id="draw">0</span> | <span id="lose">0</span> |<br>````````````<br><br><br>
-<div class="button g">Submit Score</div></div>
-<div class="highscore bg" style="background-color:white;">
-		<h2>You Scored</h2>
-		<br>Won : <input id="wina" readonly></input><br>Drew : <input id="drawa" readonly></input><br>Lost : <input id="losea" readonly></input><br>Win Percentage : <input id="wp" readonly></input>%<br><input id="naam" placeholder="Name"></input><br><button class="button h">Click to challenge the HIGH SCORER</button></div>
-<div class="score bg" style="background-color:black;"><br><h1>Want to play again, <span id="naamkaran">0</span>?</h1><br><br><div class="button s">OK</div></div>
-</center>
+  <center>
+    <div class="logo bg" style="background-color:red;">
+      <img src="logo.png" style="margin-top:150px;margin-bottom:130px;"></img>
+      <div class="button r">Instructions</div>
+      <br>
+      <div class="button l">Click to Play</div>
+    </div>
+    <div class="game bg" style="background-color:yellow;">
+      <br>
+      <h2>Click on the respective hand action to put it forward</h2>
+      <br><br>
+      <img src="scissor.png" class="scissor"></img><img src="rock.png" class="rock"></img><br><img src="paper.png" class="paper"></img>
+      <br><br>
+      <h3>
+        <div id="compa"></div>
+      </h3>
+      <br>
+      |WIN|DRAW|LOSE|
+      <br>
+      ________
+      <br>
+      | <span id="win">0</span> | <span id="draw">0</span> | <span id="lose">0</span> |
+      <br>
+      ````````````
+      <br><br><br>
+      <div class="button g">Submit Score</div>
+    </div>
+    <div class="highscore bg" style="background-color:white;">
+      <h2>You Scored</h2>
+		  <br>
+      Won : <input id="wina" readonly></input>
+      <br>
+      Drew : <input id="drawa" readonly></input>
+      <br>
+      Lost : <input id="losea" readonly></input>
+      <br>
+      Win Percentage : <input id="wp" readonly></input>%
+      <br>
+      <input id="naam" placeholder="Name"></input>
+      <br>
+      <button class="button h">Click to challenge the HIGH SCORER</button>
+    </div>
+    <div class="score bg" style="background-color:black;">
+      <br>
+      <h1>Want to play again, <span id="naamkaran">0</span>?</h1>
+      <br><br>
+      <div class="button s">OK</div>
+      <footer>
+        Cliparts used :
+        <ul>
+          <li><a href="https://www.kisspng.com/png-scroll-png-clipart-image-15966/">Paper for logo</a></li>
+          <li><a href="http://clipart-library.com/clipart/86339.htm">Rock for logo</a></li>
+          <li><a href="https://www.pngkit.com/downpic/u2q8w7w7i1a9u2y3_purple-clipart-scissors-scissor-clipart/">Scissors for logo</a></li>
+          <li><a href="https://publicdomainvectors.org/en/free-clipart/Rock-Paper-Scissors/51207.html">Rock, Paper, Scissors for game</a></li>
+        </ul>
+      </footer>
+    </div>
+  </center>
 </body>
 </html>
